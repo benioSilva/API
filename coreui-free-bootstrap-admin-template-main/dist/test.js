@@ -10,6 +10,7 @@ var listPokemonCardKey = "ListCardPokemon"
 var namePokemonLink
 var indexName
 var param
+var tempStorageKey = "pokeSelect"
 function getTeamStorage() {
     const StorageTeamAdd = localStorage.getItem(listPokemonCardKey)
     return JSON.parse(StorageTeamAdd) || []  /*maneira mais pratica de dizer que pode estar preenchida ou nulo (|| = a "ou" [] = a "null")
@@ -143,7 +144,7 @@ async function getPag1(pokeApiLinkParam) {
             getElementById(pokemonId).innerHTML += '<div class="col-xl-2 col-md-3 col-sm-4 col-6 mb-4"  class="validacao">' +
                 '<div value="' + index + '"><img src="' + link + '"  alt="' + element.name + '"></div>' +
                 '<h6 value="' + index + '">' + element.name + '</h6>' +
-               
+                "<a href='base/move-list.html' class='list-group-item list-group-item-action'><button onclick= 'moreInfoPokeSelect(\"" + element.name + "\",\"" + link + "\")' class='btn btn-primary btn-sm'> More Info</button></a>" +
                 "<button onclick= 'addPokemon(\"" + element.name + "\",\"" + link + "\")' class='btn btn-success' id='addToTeam'>Add To Team</button>" +
                 '</div>'
 
@@ -164,14 +165,15 @@ async function getPag1(pokeApiLinkParam) {
 
 
 }
-// function moreInfoPokeSelect(namePokeSelect, imgLinkSelect){
-//     console.log(namePokeSelect,imgLinkSelect)
-//     let moreInfoSelect = {
-//         NamePokemonSelect: namePokeSelect,
-//         PokemonImageSelect: imgLinkSelect
-//     }
-//     console.log(moreInfoSelect)
-// }
+function moreInfoPokeSelect(namePokeSelect, imgLinkSelect){
+    console.log(namePokeSelect,imgLinkSelect)
+    let moreInfoSelect = {
+        NamePokemonSelect: namePokeSelect,
+        PokemonImageSelect: imgLinkSelect
+    }
+    localStorage.setItem(tempStorageKey, JSON.stringify(moreInfoSelect))
+    console.log(moreInfoSelect)
+}
 
 function addPokemon(namePoke, imgLink) {
     console.log(namePoke, imgLink)
@@ -217,7 +219,7 @@ function upPokeAdd() {
         getElementById(pokeAddTeamId).innerHTML += '<div class="col-xl-2 col-md-3 col-sm-4 col-6 mb-4" >' +
             '<div value="' + index + '"><img src="' + element.PokemonImage + '"  alt="' + element.NamePokemon + '">' +
             '<h6 value="' + index + '">' + element.NamePokemon + '</h6></div>' +
-           
+            
             "<button onclick= 'deleteToTeam(" + index + ")' class='btn btn-danger' id='addToTeam'>Delete To Team</button>" +
             '</div>'
     });
