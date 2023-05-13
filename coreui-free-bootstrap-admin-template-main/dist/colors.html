@@ -326,7 +326,7 @@
           <div id="pokemonTeamx" class="row">
 
           </div>
-        
+
         </div>
       </div>
     </div>
@@ -338,11 +338,14 @@
           <div id="pokemon" class="row">
 
           </div>
-
+          <div class="spinner-border" style="width: 3rem; height: 3rem; display: none;" role="status" id="spinner">
+            <span class="visually-hidden">Loading...</span>
+          </div>
         </div>
       </div>
-      <div><button onclick="previousPage()" class="btn btn-secondary rounded-pill">Previous</button>
-        <button onclick="nextPage()" class="btn btn-dark rounded-pill">Next</button>
+      
+      <div><button onclick=" previousPage()" class="btn btn-secondary rounded-pill btn-change-page">Previous</button>
+        <button onclick="  nextPage()" class="btn btn-dark rounded-pill btn-change-page">Next</button>
       </div>
     </div>
   </div>
@@ -358,7 +361,7 @@
   <!-- Plugins and scripts required by this view-->
   <script src="vendors/@coreui/utils/js/coreui-utils.js"></script>
   <script src="js/colors.js"></script>
- 
+
   <script src="test.js"></script>
 
 </body>

@@ -23,7 +23,8 @@ function getTeamStorage() {
 
 function previousPage() {
     if (previousLink) {
-        getPag1(previousLink)
+         getPag1(previousLink)
+
 
     }
 }
@@ -34,7 +35,7 @@ function previousPagesssss(link) {
 function nextPage() {
     if (nextLink) {/*faco um if para verificar se nextLink existe(condicao do if: se nextLink existe) me mostra o getPag1
     com o nextLink de paramentro */
-        getPag1(nextLink)
+         getPag1(nextLink)
     }
 }
 
@@ -109,6 +110,7 @@ async function getSprites(para) {
 }
 
 async function getPag1(pokeApiLinkParam) {
+    toggleSpinner()
     const response = await axios.get(pokeApiLinkParam)
 
     const listName = response.data.results
@@ -135,6 +137,7 @@ async function getPag1(pokeApiLinkParam) {
 
 
 
+
         // getElementById(pokemonId).innerHTML += '<div class="col-xl-2 col-md-3 col-sm-4 col-6 mb-4"  class="validacao">' +
         //     '<div value="' + index + '"><img src="' + link + '"  alt="' + element.name + '"></div>' +
         //     '<h6 value="' + index + '">' + element.name + '</h6>' +
@@ -151,22 +154,23 @@ async function getPag1(pokeApiLinkParam) {
 
         } else {
             getElementById(pokemonId).innerHTML += '<div class="col-xl-2 col-md-3 col-sm-4 col-6 mb-4"  class="validacao">' +
-            '<div value="' + index + '"><img src="' + link + '"  alt="' + element.name + '"></div>' +
-            '<h6 value="' + index + '">' + element.name + '</h6>' +
-            "<a href='base/move-list.html' class='list-group-item list-group-item-action'><button onclick= 'moreInfoPokeSelect(\"" + element.name + "\",\"" + link + "\")' class='btn btn-primary btn-sm'> More Info</button></a>" +
-            '</div>'
+                '<div value="' + index + '"><img src="' + link + '"  alt="' + element.name + '"></div>' +
+                '<h6 value="' + index + '">' + element.name + '</h6>' +
+                "<a href='base/move-list.html' class='list-group-item list-group-item-action'><button onclick= 'moreInfoPokeSelect(\"" + element.name + "\",\"" + link + "\")' class='btn btn-primary btn-sm'> More Info</button></a>" +
+                '</div>'
         }
 
 
     }
+    toggleSpinner()
     //getElementById(pokemonId).innerHTML +="<button onclick='previousPagesssss(\""+response.data.previous+"\")'>Previous</button>"
     nextLink = response.data.next
     previousLink = response.data.previous
 
 
 }
-function moreInfoPokeSelect(namePokeSelect, imgLinkSelect){
-    console.log(namePokeSelect,imgLinkSelect)
+function moreInfoPokeSelect(namePokeSelect, imgLinkSelect) {
+    console.log(namePokeSelect, imgLinkSelect)
     let moreInfoSelect = {
         namePokemonSelect: namePokeSelect,
         pokemonImageSelect: imgLinkSelect
@@ -177,7 +181,7 @@ function moreInfoPokeSelect(namePokeSelect, imgLinkSelect){
 
 function addPokemon(namePoke, imgLink) {
     console.log(namePoke, imgLink)
-    
+
     let pokemonSelect = {
         NamePokemon: namePoke,
         PokemonImage: imgLink
@@ -216,7 +220,7 @@ function upPokeAdd() {
 
     getTeamStorage().forEach(function (element, index) {
         console.log(element, index)
-        let linkImage = element.PokemonImage+element.NamePokemon
+
         getElementById(pokeAddTeamId).innerHTML += '<div class="col-xl-2 col-md-3 col-sm-4 col-6 mb-4" >' +
             '<div value="' + index + '"><img src="' + element.PokemonImage + '"  alt="' + element.NamePokemon + '">' +
             '<h6 value="' + index + '">' + element.NamePokemon + '</h6></div>' +
@@ -236,7 +240,24 @@ function deleteToTeam(poke) {
     getPag1(pokeApiLink)
 
 }
+function toggleSpinner() {
 
+    var isSpinnerDisplayNone = document.getElementById("spinner").style.display == "none"
+    if (isSpinnerDisplayNone) {
+        document.getElementById("spinner").style.display = "block" 
+        getElementById(pokemonId).style.display = "none"
+        document.querySelectorAll(".btn-change-page").forEach(element => {
+          element.disabled = true  
+        });
+    } else {
+        document.getElementById("spinner").style.display = "none"
+        getElementById(pokemonId).style.display = "flex"
+        document.querySelectorAll(".btn-change-page").forEach(element => {
+            element.disabled = false 
+          });
+
+    }
+}
 /*chamei a variavel pokeApiLink dentro da funcao, assim ele me tras todos os pokemons ja que o valor dessa variavel
 é o link de todos eles*/
 
