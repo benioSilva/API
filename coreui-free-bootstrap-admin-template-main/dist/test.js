@@ -168,8 +168,8 @@ async function getPag1(pokeApiLinkParam) {
 function moreInfoPokeSelect(namePokeSelect, imgLinkSelect){
     console.log(namePokeSelect,imgLinkSelect)
     let moreInfoSelect = {
-        NamePokemonSelect: namePokeSelect,
-        PokemonImageSelect: imgLinkSelect
+        namePokemonSelect: namePokeSelect,
+        pokemonImageSelect: imgLinkSelect
     }
     localStorage.setItem(tempStorageKey, JSON.stringify(moreInfoSelect))
     console.log(moreInfoSelect)
@@ -220,7 +220,7 @@ function upPokeAdd() {
         getElementById(pokeAddTeamId).innerHTML += '<div class="col-xl-2 col-md-3 col-sm-4 col-6 mb-4" >' +
             '<div value="' + index + '"><img src="' + element.PokemonImage + '"  alt="' + element.NamePokemon + '">' +
             '<h6 value="' + index + '">' + element.NamePokemon + '</h6></div>' +
-            "<a href='base/move-list.html' class='list-group-item list-group-item-action'><button onclick= 'moreInfoPokeSelect(\"" + element.NamePokemon + "\",\"" + linkImage + "\")' class='btn btn-primary btn-sm'> More Info</button></a>" +
+            "<a href='base/move-list.html' class='list-group-item list-group-item-action'><button onclick= 'moreInfoPokeSelect(\"" + element.NamePokemon + "\",\"" + element.PokemonImage + "\")' class='btn btn-primary btn-sm'> More Info</button></a>" +
             "<button onclick= 'deleteToTeam(" + index + ")' class='btn btn-danger' id='addToTeam'>Delete To Team</button>" +
             '</div>'
     });

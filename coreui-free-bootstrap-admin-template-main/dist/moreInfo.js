@@ -10,111 +10,67 @@ var listPokemonCardKey = "ListCardPokemon"
 var namePokemonLink
 var indexName
 var param
+var tempStorageKey = "pokeSelect"
+var pokemonTargetId = "pokemonSelectMoreInfo"
+var movesTargetId = "movesTarget"
 function getTeamStorage() {
     const StorageTeamAdd = localStorage.getItem(listPokemonCardKey)
     return JSON.parse(StorageTeamAdd) || []  /*maneira mais pratica de dizer que pode estar preenchida ou nulo (|| = a "ou" [] = a "null")
     dessa forma nao precisei faz o if para validar que o localStorage estava null para  inserir os dados*/
 }
 
-
-//var namePokemonLink
-
-
-function previousPage() {
-    if (previousLink) {
-        getPag1(previousLink)
-        
-    }
-}
-function previousPagesssss(link) {
-    console.log(link)
-    getPag1(link)
-}
-function nextPage() {
-    if (nextLink) {/*faco um if para verificar se nextLink existe(condicao do if: se nextLink existe) me mostra o getPag1
-    com o nextLink de paramentro */
-        getPag1(nextLink)
-    }
-}
-
 function getElementById(id) {
     return document.getElementById(id)
 }
 
-function get() {
-    const response = axios.get('https://pokeapi.co/api/v2/pokemonsss')
-    console.log(response)
-    response
-        .then(data => { console.log(data) })
-        .catch(data => { console.log(data) })
-    console.log(response)
+function getTempStorage(){
+    const StorageTemp = localStorage.getItem(tempStorageKey)
+    return JSON.parse(StorageTemp)
 }
-// get()
 
-async function getas() {
-    const response = await axios.get('https://pokeapi.co/api/v2/pokemon')
-    console.log(response)
-    console.log(response.data)
-    console.log(11111)
+let namePokeTarget = getTempStorage().namePokemonSelect
+console.log(namePokeTarget)
+let imgPokeTarget = getTempStorage().pokemonImageSelect
 
+function pokemonTarget(){
+    getElementById(pokemonTargetId).innerHTML = '<div   class="validacao">' +
+        '<div><img src="' + imgPokeTarget + '"  alt="' + namePokeTarget+ '"></div>' +
+        '<h6>' + namePokeTarget + '</h6>' 
 }
-//getas()
-
-//
-////var axios = {
-//    get: function(url) {
-//        return new Promise(url)
-//    }
-//}
-//
-//const Promise = {
-//    then: function(func) {
-//        func()
-//    }
-//}
-// Promise.then(ggg())
-//
-// function ggg() {
-//    console.log(1)
-//    return function() {
-//        console.log(response)
-//    }
-// }
-//async
+pokemonTarget()
+/*------------------------------------!!!!NOVA EDIÇÕES TERMINA AQUI!!!!-------------------------------------------------------------------------------------------------------------------- */
+getMovesNames()
+async function getMovesNames() {
+    const response = await axios.get('https://pokeapi.co/api/v2/pokemon/'+namePokeTarget+'')
+    response.data.moves
+    console.log(response.data.moves)
+    
+     
+     for (let index = 0; index < response.data.moves.length; index++) {
+        const element = response.data.moves[index];
+        console.log(element.move.name, index)
+        getElementById(movesTargetId).innerHTML += '<ol>'+
+        '<li  value ="'+(index+1)+'">'+element.move.name+'</li>'+
+        '</ol>'
+        
+     }
 
 
-// async function getPokemonsList() {
-//     //const response = await axios.get(' https://pokeapi.co/api/v2/pokemon?limit=100000&offset=0/')
-//     const response = await axios.get(' https://pokeapi.co/api/v2/pokemon')
+ }
+
+// async function getPag1() {
+//     const response = await axios.get('https://pokeapi.co/api/v2/pokemon')
 //     response.data.results
-//     const listFullPokemons = response.data.results
-//     for (let index = 0; index < response.data.results.length; index++) {
-//         const element = listFullPokemons[index];
-//         const link = await getSprites(element.name)
-
-
-//     }
-
-// }
-
-async function getSprites(para) {
-    const response = await axios.get('https://pokeapi.co/api/v2/pokemon/' + para + '')
-    response.data.sprites.front_default
-    //console.log(response.data.sprites.front_default)
-
-    return response.data.sprites.front_default
-
-
-}
-
-async function getPag1(pokeApiLinkParam) {
-    const response = await axios.get(pokeApiLinkParam)
-
-    const listName = response.data.results
+//   const listFullPokemons = response.data.results
+//   for (let index = 0; index < response.data.results.length; index++) {
+//       const element = listFullPokemons[index];
+//       const link = await getSprites(element.name)
+//     console.log(link)
+//   }
     /*como o axios.get recebe o mesmo parametro que a funcao getPag1, toda vez
     que o chamo o getPag1 com um valor diferente no paramentro ele me retorna valores difeerentes sob a mesma funcao (declarar a
         variavel antes com os valores que eu quero) */
-    getElementById(pokemonId).innerHTML = ""
+    //getElementById(pokemonId).innerHTML = ""
     //primeiro começa com a lista limpa
     /*response.data.results.forEach(async function (element, index) {
         console.log(response.data.results)
@@ -125,20 +81,22 @@ async function getPag1(pokeApiLinkParam) {
             '<h6 value="' + index + '" class=namePokemon>' + element.name + '</h6>' +
             '</div>'
     });*/
-    for (let index = 0; index < response.data.results.length; index++) {
-        const element = listName[index];
-        param = element.name
-        console.log(param)
+    // for (let index = 0; index < response.data.results.length; index++) {
+    //     const element = listName[index];
+    //     param = element.name
+    //     console.log(param)
 
-        const link = await getSprites(element.name)
+    //     const link = await getSprites(element.name)
 
 
 
-        getElementById(pokemonId).innerHTML += '<div class="col-xl-2 col-md-3 col-sm-4 col-6 mb-4"  class="validacao">' +
-            '<div value="' + index + '"><img src="' + link + '"  alt="' + element.name + '"></div>' +
-            '<h6 value="' + index + '">' + element.name + '</h6>' +
-            "<button onclick= 'addPokemon(\"" + element.name + "\",\"" + link + "\")' class='btn btn-success' id='addToTeam'>Add To Team</button>" +
-            '</div>'
+    //     getElementById(pokemonId).innerHTML += '<div class="col-xl-2 col-md-3 col-sm-4 col-6 mb-4"  class="validacao">' +
+    //         '<div value="' + index + '"><img src="' + link + '"  alt="' + element.name + '"></div>' +
+    //         '<h6 value="' + index + '">' + element.name + '</h6>' +
+    //         "<button onclick= 'addPokemon(\"" + element.name + "\",\"" + link + "\")' class='btn btn-success' id='addToTeam'>Add To Team</button>" +
+    //         '</div>'
+
+
             // if(getTeamStorage().length<1){
             //     getElementById(pokemonId).innerHTML += '<div class="col-xl-2 col-md-3 col-sm-4 col-6 mb-4"  class="validacao">' +
             // '<div value="' + index + '"><img src="' + link + '"  alt="' + element.name + '"></div>' +
@@ -153,10 +111,10 @@ async function getPag1(pokeApiLinkParam) {
             // '<h6 value="' + index + '">' + element.name + '</h6>'
             
             
-            }
+          //  }
 
 
-        }
+       // }
     //getElementById(pokemonId).innerHTML +="<button onclick='previousPagesssss(\""+response.data.previous+"\")'>Previous</button>"
     // nextLink = response.data.next
     // previousLink = response.data.previous
@@ -194,7 +152,7 @@ async function getPag1(pokeApiLinkParam) {
 empregando valores a elas */
 //getPokemonsList()
 
-getPag1(pokeApiLink)
+//getPag1()
 
 // upPokeAdd()
 // function upPokeAdd() {
