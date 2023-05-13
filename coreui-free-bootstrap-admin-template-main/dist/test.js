@@ -153,7 +153,7 @@ async function getPag1(pokeApiLinkParam) {
             getElementById(pokemonId).innerHTML += '<div class="col-xl-2 col-md-3 col-sm-4 col-6 mb-4"  class="validacao">' +
             '<div value="' + index + '"><img src="' + link + '"  alt="' + element.name + '"></div>' +
             '<h6 value="' + index + '">' + element.name + '</h6>' +
-            
+            "<a href='base/move-list.html' class='list-group-item list-group-item-action'><button onclick= 'moreInfoPokeSelect(\"" + element.name + "\",\"" + link + "\")' class='btn btn-primary btn-sm'> More Info</button></a>" +
             '</div>'
         }
 
@@ -216,10 +216,11 @@ function upPokeAdd() {
 
     getTeamStorage().forEach(function (element, index) {
         console.log(element, index)
+        let linkImage = element.PokemonImage+element.NamePokemon
         getElementById(pokeAddTeamId).innerHTML += '<div class="col-xl-2 col-md-3 col-sm-4 col-6 mb-4" >' +
             '<div value="' + index + '"><img src="' + element.PokemonImage + '"  alt="' + element.NamePokemon + '">' +
             '<h6 value="' + index + '">' + element.NamePokemon + '</h6></div>' +
-            
+            "<a href='base/move-list.html' class='list-group-item list-group-item-action'><button onclick= 'moreInfoPokeSelect(\"" + element.NamePokemon + "\",\"" + linkImage + "\")' class='btn btn-primary btn-sm'> More Info</button></a>" +
             "<button onclick= 'deleteToTeam(" + index + ")' class='btn btn-danger' id='addToTeam'>Delete To Team</button>" +
             '</div>'
     });
