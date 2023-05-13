@@ -23,7 +23,7 @@ function getTeamStorage() {
 function previousPage() {
     if (previousLink) {
         getPag1(previousLink)
-
+        
     }
 }
 function previousPagesssss(link) {
@@ -134,53 +134,42 @@ async function getPag1(pokeApiLinkParam) {
 
 
 
-        // getElementById(pokemonId).innerHTML += '<div class="col-xl-2 col-md-3 col-sm-4 col-6 mb-4"  class="validacao">' +
-        //     '<div value="' + index + '"><img src="' + link + '"  alt="' + element.name + '"></div>' +
-        //     '<h6 value="' + index + '">' + element.name + '</h6>' +
-        //     "<button onclick= 'addPokemon(\"" + element.name + "\",\"" + link + "\")' class='btn btn-success' id='addToTeam'>Add To Team</button>" +
-        //     '</div>'
-        if (getTeamStorage().length < 6) {
-            getElementById(pokemonId).innerHTML += '<div class="col-xl-2 col-md-3 col-sm-4 col-6 mb-4"  class="validacao">' +
-                '<div value="' + index + '"><img src="' + link + '"  alt="' + element.name + '"></div>' +
-                '<h6 value="' + index + '">' + element.name + '</h6>' +
-               
-                "<button onclick= 'addPokemon(\"" + element.name + "\",\"" + link + "\")' class='btn btn-success' id='addToTeam'>Add To Team</button>" +
-                '</div>'
-
-
-        } else {
-            getElementById(pokemonId).innerHTML += '<div class="col-xl-2 col-md-3 col-sm-4 col-6 mb-4"  class="validacao">' +
+        getElementById(pokemonId).innerHTML += '<div class="col-xl-2 col-md-3 col-sm-4 col-6 mb-4"  class="validacao">' +
             '<div value="' + index + '"><img src="' + link + '"  alt="' + element.name + '"></div>' +
             '<h6 value="' + index + '">' + element.name + '</h6>' +
-            
+            "<button onclick= 'addPokemon(\"" + element.name + "\",\"" + link + "\")' class='btn btn-success' id='addToTeam'>Add To Team</button>" +
             '</div>'
+            // if(getTeamStorage().length<1){
+            //     getElementById(pokemonId).innerHTML += '<div class="col-xl-2 col-md-3 col-sm-4 col-6 mb-4"  class="validacao">' +
+            // '<div value="' + index + '"><img src="' + link + '"  alt="' + element.name + '"></div>' +
+            // '<h6 value="' + index + '">' + element.name + '</h6>' +
+            // "<button onclick= 'addPokemon(\"" + element.name + "\",\"" + link + "\")' class='btn btn-success' id='addToTeam'>Add To Team</button>" +
+            // '</div>'
+                
+           
+            // } else {
+            //     getElementById(pokemonId).innerHTML += '<div class="col-xl-2 col-md-3 col-sm-4 col-6 mb-4"  class="validacao">' +
+            // '<div value="' + index + '"><img src="' + link + '"  alt="' + element.name + '"></div>' +
+            // '<h6 value="' + index + '">' + element.name + '</h6>'
+            
+            
+            }
+
+
         }
-
-
-    }
     //getElementById(pokemonId).innerHTML +="<button onclick='previousPagesssss(\""+response.data.previous+"\")'>Previous</button>"
-    nextLink = response.data.next
-    previousLink = response.data.previous
+    // nextLink = response.data.next
+    // previousLink = response.data.previous
 
 
-}
-// function moreInfoPokeSelect(namePokeSelect, imgLinkSelect){
-//     console.log(namePokeSelect,imgLinkSelect)
-//     let moreInfoSelect = {
-//         NamePokemonSelect: namePokeSelect,
-//         PokemonImageSelect: imgLinkSelect
+
+// function addPokemon(namePoke, imgLink) {
+//     console.log(namePoke, imgLink)
+//     let pokemonSelect = {
+//         NamePokemon: namePoke,
+//         PokemonImage: imgLink
 //     }
-//     console.log(moreInfoSelect)
-// }
-
-function addPokemon(namePoke, imgLink) {
-    console.log(namePoke, imgLink)
-    
-    let pokemonSelect = {
-        NamePokemon: namePoke,
-        PokemonImage: imgLink
-    }
-    console.log(pokemonSelect)
+//     console.log(pokemonSelect)
 
     // if (getTeamStorage() == null) {
     //     let whoIsThisPokemon = [pokemonSelect]
@@ -191,52 +180,54 @@ function addPokemon(namePoke, imgLink) {
     //     localStorage.setItem(listPokemonCardKey, JSON.stringify(TeamStorageRealocando))
     // }
 
-    const teamStorageRealocando = getTeamStorage()
-    if (teamStorageRealocando.length < 6) {
-        teamStorageRealocando.push(pokemonSelect)
-        localStorage.setItem(listPokemonCardKey, JSON.stringify(teamStorageRealocando))
-        upPokeAdd()
-        getPag1(pokeApiLink)
-    }/* um if para estabelecer que que o comprimento pode ir somente até 6 lugares (length é o total e conta a partir do 1)
-    como nao precisei mais do if como mencionei a cima, já dou o push direito na resposta do if */
+//     const teamStorageRealocando = getTeamStorage()
+//     if(teamStorageRealocando.length<6){
+//         teamStorageRealocando.push(pokemonSelect)
+//         localStorage.setItem(listPokemonCardKey, JSON.stringify(teamStorageRealocando))
+//         upPokeAdd()
+//         getPag1(pokeApiLink)
+//     }/* um if para estabelecer que que o comprimento pode ir somente até 6 lugares (length é o total e conta a partir do 1)
+//     como nao precisei mais do if como mencionei a cima, já dou o push direito na resposta do if */
 
-}
+// }
 /*declarei primeiro as variaveis (nextLink e previousLink) fora sem receber nenhum valor e aqui dentro de minha funcao estou
 empregando valores a elas */
 //getPokemonsList()
 
 getPag1(pokeApiLink)
 
-upPokeAdd()
-function upPokeAdd() {
-    console.log(getElementById(pokeAddTeamId))
-    getElementById(pokeAddTeamId).innerHTML = ""
+// upPokeAdd()
+// function upPokeAdd() {
+//     console.log(getElementById(pokeAddTeamId))
+//     getElementById(pokeAddTeamId).innerHTML = ""
 
-    getTeamStorage().forEach(function (element, index) {
-        console.log(element, index)
-        getElementById(pokeAddTeamId).innerHTML += '<div class="col-xl-2 col-md-3 col-sm-4 col-6 mb-4" >' +
-            '<div value="' + index + '"><img src="' + element.PokemonImage + '"  alt="' + element.NamePokemon + '">' +
-            '<h6 value="' + index + '">' + element.NamePokemon + '</h6></div>' +
-           
-            "<button onclick= 'deleteToTeam(" + index + ")' class='btn btn-danger' id='addToTeam'>Delete To Team</button>" +
-            '</div>'
-    });
-}
-function deleteToTeam(poke) {
-    let realocandoGetTeamStorage = getTeamStorage()
-    realocandoGetTeamStorage = realocandoGetTeamStorage.filter(function (element, index) {
-        console.log(element, index)
-        return poke != index
-    })
-    localStorage.setItem(listPokemonCardKey, JSON.stringify(realocandoGetTeamStorage))
-    upPokeAdd()
-    getPag1(pokeApiLink)
+//     getTeamStorage().forEach(function (element, index) {
+//         console.log(element, index)
+//         getElementById(pokeAddTeamId).innerHTML += '<div class="col-xl-2 col-md-3 col-sm-4 col-6 mb-4" >' +
+//         '<div value="' + index + '"><img src="' + element.PokemonImage + '"  alt="' + element.NamePokemon + '">' +
+//         '<h6 value="' + index + '">' + element.NamePokemon + '</h6></div>' +       
+//         '<div class="btn-group">'+         
+//             '<a href="base/move-list.html" class="btn btn-primary btn-sm">More Info</a>'+
+//             '</div>'+
+//             "<button onclick= 'deleteToTeam("+index+")' class='btn btn-danger' id='addToTeam'>Delete To Team</button>" +
+//         '</div>'
+//     });
+// }
+// function deleteToTeam(poke){
+//    let realocandoGetTeamStorage = getTeamStorage()
+//     realocandoGetTeamStorage =  realocandoGetTeamStorage.filter(function(element, index){
+//         console.log(element, index)
+//         return  poke != index
+//     })
+//     localStorage.setItem(listPokemonCardKey,JSON.stringify(realocandoGetTeamStorage))
+//     upPokeAdd()
+//     getPag1(pokeApiLink)
 
-}
+// }
 
 /*chamei a variavel pokeApiLink dentro da funcao, assim ele me tras todos os pokemons ja que o valor dessa variavel
 é o link de todos eles*/
 
 
-
+    
 
