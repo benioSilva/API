@@ -321,11 +321,14 @@
     <div class="body flex-grow-1 px-3">
       <div class="container-lg">
         <div class="card mb-4">
-          <div class="card-header"> <button class="btn btn-info rounded-pill" onclick="upPokeAdd()">Criar Time</button><button>Salvar</button><button>Excluir</button>
+          <div class="card-header">
+            <button class="btn btn-info rounded-pill" onclick="upPokeAdd()">Criar Time</button>
+            <button class="btn btn-success rounded-pill" style="display: none;" id="botao-salvar">Salvar</button>
+            <button class="btn btn-danger rounded-pill" style="display: none;" id="botao-excluir">Excluir</button>
           </div>
           <div id="nameTeam" style="display: none;">
-            <label for="">Nome do Time</label><br>
-            <input type="text">
+            <label for="">Nome do Time</label>
+            <input id="nome-time" type="text" placeholder="que time é teu?">
           </div>
           <div id="pokemonTeamx" class="row">
 
@@ -334,30 +337,58 @@
         </div>
       </div>
     </div>
-
     <div class="body flex-grow-1 px-3">
       <div class="container-lg">
         <div class="card mb-4">
-          <div class="card-header"> Theme colors</div>
-          <div id="pokemon" class="row">
 
-          </div>
-          <div class="spinner-border" style="width: 3rem; height: 3rem; display: none;" role="status" id="spinner">
-            <span class="visually-hidden">Loading...</span>
+          <div class="tab-content rounded-bottom">
+            <div class="tab-pane p-3 active preview" role="tabpanel" id="preview-81">
+              <table class="table table-striped">
+                <thead>
+                  <tr>
+                    <th scope="col">Nº</th>
+                    <th scope="col">Nome do Time</th>
+                    <th scope="col">Pokemon 1</th>
+                    <th scope="col">Pokemon 2</th>
+                    <th scope="col">Pokemon 3</th>
+                    <th scope="col">Pokemon 4</th>
+                    <th scope="col">Pokemon 5</th>
+                    <th scope="col">Pokemon 6</th>
+                    <th scope="col">Deletar Time</th>
+                  </tr>
+                </thead>
+                <tbody id="lista-de-time">
+                  
+                </tbody>
+              </table>
+            </div>
           </div>
         </div>
       </div>
+    </div>
+      <div class="body flex-grow-1 px-3">
+        <div class="container-lg">
+          <div class="card mb-4">
+            <div class="card-header"> Theme colors</div>
+            <div id="pokemon" class="row">
 
-      <div><button onclick=" previousPage()" class="btn btn-secondary rounded-pill btn-change-page">Previous</button>
-        <button onclick="  nextPage()" class="btn btn-dark rounded-pill btn-change-page">Next</button>
+            </div>
+            <div class="spinner-border" style="width: 3rem; height: 3rem; display: none;" role="status" id="spinner">
+              <span class="visually-hidden">Loading...</span>
+            </div>
+          </div>
+        </div>
+
+        <div><button onclick=" previousPage()" class="btn btn-secondary rounded-pill btn-change-page">Previous</button>
+          <button onclick="  nextPage()" class="btn btn-dark rounded-pill btn-change-page">Next</button>
+        </div>
       </div>
     </div>
-  </div>
 
 
-  <footer class="footer">
+    <footer class="footer">
 
-  </footer>
+    </footer>
   </div>
   <!-- CoreUI and necessary plugins-->
   <script src="vendors/@coreui/coreui/js/coreui.bundle.min.js"></script>
