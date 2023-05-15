@@ -321,8 +321,12 @@
     <div class="body flex-grow-1 px-3">
       <div class="container-lg">
         <div class="card mb-4">
-          <div class="card-header"> Theme colors</div>
-
+          <div class="card-header"> <button class="btn btn-info rounded-pill" onclick="upPokeAdd()">Criar Time</button><button>Salvar</button><button>Excluir</button>
+          </div>
+          <div id="nameTeam" style="display: none;">
+            <label for="">Nome do Time</label><br>
+            <input type="text">
+          </div>
           <div id="pokemonTeamx" class="row">
 
           </div>
@@ -343,7 +347,7 @@
           </div>
         </div>
       </div>
-      
+
       <div><button onclick=" previousPage()" class="btn btn-secondary rounded-pill btn-change-page">Previous</button>
         <button onclick="  nextPage()" class="btn btn-dark rounded-pill btn-change-page">Next</button>
       </div>

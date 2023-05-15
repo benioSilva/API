@@ -1,3 +1,4 @@
+toggleAddVisivel()
 var pokeAddTeamId = "pokemonTeamx"
 var pokemonId = "pokemon"
 var pokemonCardId = "pokemonCard"
@@ -23,7 +24,7 @@ function getTeamStorage() {
 
 function previousPage() {
     if (previousLink) {
-         getPag1(previousLink)
+        getPag1(previousLink)
 
 
     }
@@ -35,7 +36,7 @@ function previousPagesssss(link) {
 function nextPage() {
     if (nextLink) {/*faco um if para verificar se nextLink existe(condicao do if: se nextLink existe) me mostra o getPag1
     com o nextLink de paramentro */
-         getPag1(nextLink)
+        getPag1(nextLink)
     }
 }
 
@@ -111,6 +112,7 @@ async function getSprites(para) {
 
 async function getPag1(pokeApiLinkParam) {
     toggleSpinner()
+    toggleAddVisivel()
     const response = await axios.get(pokeApiLinkParam)
 
     const listName = response.data.results
@@ -148,7 +150,7 @@ async function getPag1(pokeApiLinkParam) {
                 '<div value="' + index + '"><img src="' + link + '"  alt="' + element.name + '"></div>' +
                 '<h6 value="' + index + '">' + element.name + '</h6>' +
                 "<a href='base/move-list.html' class='list-group-item list-group-item-action'><button onclick= 'moreInfoPokeSelect(\"" + element.name + "\",\"" + link + "\")' class='btn btn-primary btn-sm'> More Info</button></a>" +
-                "<button onclick= 'addPokemon(\"" + element.name + "\",\"" + link + "\")' class='btn btn-success' id='addToTeam'>Add To Team</button>" +
+                "<button onclick= 'addPokemon(\"" + element.name + "\",\"" + link + "\")' class='btn btn-success botao-add' style='display: none;'>Add To Team</button>" +
                 '</div>'
 
 
@@ -163,6 +165,7 @@ async function getPag1(pokeApiLinkParam) {
 
     }
     toggleSpinner()
+    toggleAddVisivel()
     //getElementById(pokemonId).innerHTML +="<button onclick='previousPagesssss(\""+response.data.previous+"\")'>Previous</button>"
     nextLink = response.data.next
     previousLink = response.data.previous
@@ -213,9 +216,15 @@ empregando valores a elas */
 
 getPag1(pokeApiLink)
 
-upPokeAdd()
+
 function upPokeAdd() {
+    document.getElementById("nameTeam").style.display = "block"
     console.log(getElementById(pokeAddTeamId))
+    // document.querySelectorAll(".botao-add").forEach(element => {
+    //     element.style.display = "inline-block"
+    // });
+    //botaoAddVisivel()
+    toggleAddVisivel()
     getElementById(pokeAddTeamId).innerHTML = ""
 
     getTeamStorage().forEach(function (element, index) {
@@ -228,39 +237,68 @@ function upPokeAdd() {
             "<button onclick= 'deleteToTeam(" + index + ")' class='btn btn-danger' id='addToTeam'>Delete To Team</button>" +
             '</div>'
     });
+
 }
 function deleteToTeam(poke) {
+
     let realocandoGetTeamStorage = getTeamStorage()
     realocandoGetTeamStorage = realocandoGetTeamStorage.filter(function (element, index) {
         console.log(element, index)
         return poke != index
     })
+
     localStorage.setItem(listPokemonCardKey, JSON.stringify(realocandoGetTeamStorage))
     upPokeAdd()
     getPag1(pokeApiLink)
+    upPokeAdd()
+
 
 }
-function toggleSpinner() {
+function toggleSpinner() {/*essa função faz com que a tela funciona como um interruptor atribuindo o valor de none 
+para o display e com o if pergunto se minha variavel tem o o display none, se tiver quero que ele passa a ser block
+e o meu corpo passa a ser none (acende um / apaga outro) e o else para fazer o contrario, mas entrando no elements
+pelo console do navegador, indica que o display da tela nao e block, mas sim flex, entao ele retorna para flex e me 
+mostra a visualização padrao assim  que carregar todos os pokemons*/
 
     var isSpinnerDisplayNone = document.getElementById("spinner").style.display == "none"
     if (isSpinnerDisplayNone) {
-        document.getElementById("spinner").style.display = "block" 
+        document.getElementById("spinner").style.display = "block"
         getElementById(pokemonId).style.display = "none"
         document.querySelectorAll(".btn-change-page").forEach(element => {
-          element.disabled = true  
+            element.disabled = true
         });
     } else {
         document.getElementById("spinner").style.display = "none"
         getElementById(pokemonId).style.display = "flex"
         document.querySelectorAll(".btn-change-page").forEach(element => {
-            element.disabled = false 
-          });
+            element.disabled = false
+        });
 
     }
 }
 /*chamei a variavel pokeApiLink dentro da funcao, assim ele me tras todos os pokemons ja que o valor dessa variavel
 é o link de todos eles*/
+// function botaoAddVisivel() {
+//     var isBtnDisplayNone = document.querySelectorAll(".botao-add").style.display == "none"
+//     if (isBtnDisplayNone) { 
+//         isBtnDisplayNone.forEach(element => {
+//             element.style.display = "inline-block"
+//         });
+//     }
+
+// }
+function botaoAddVisivel() {
+    document.querySelectorAll(".botao-add").forEach(element => {
+        element.style.display = "inline-block"
+    });
+}
 
 
+function toggleAddVisivel(){
+    var pokemonEquipe = document.getElementById("nameTeam").style.display == "block"
+    if(pokemonEquipe){
+        botaoAddVisivel()
+    }
+}
 
-
+toggleAddVisivel()
