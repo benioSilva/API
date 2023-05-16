@@ -1,4 +1,4 @@
-toggleAddVisivel()
+
 var pokeAddTeamId = "pokemonTeamx"
 var pokemonId = "pokemon"
 var pokemonCardId = "pokemonCard"
@@ -11,12 +11,14 @@ var listPokemonCardKey = "ListCardPokemon"
 var namePokemonLink
 var indexName
 var param
+var nameTeamId = "nameTeam"
 var tempStorageKey = "pokeSelect"
 var nameTeamPokeId = "nome-time"
 var listTeamKey = "listTeam"
-var btnSalvar = "botao-salvar"
+var btnSalvarId = "botao-salvar"
 var listaTimeId = "lista-de-time"
-var btnExcluir  = "botao-excluir"
+var btnExcluirId = "botao-excluir"
+var btnCriarTimeId ="botao-criar-time"
 function getTeamStorage() {
     const StorageTeamAdd = localStorage.getItem(listPokemonCardKey)
     return JSON.parse(StorageTeamAdd) || []  /*maneira mais pratica de dizer que pode estar preenchida ou nulo (|| = a "ou" [] = a "null")
@@ -123,8 +125,9 @@ async function getSprites(para) {
 }
 
 async function getPag1(pokeApiLinkParam) {
+    
     toggleSpinner()
-    toggleAddVisivel()
+    
     const response = await axios.get(pokeApiLinkParam)
 
     const listName = response.data.results
@@ -177,10 +180,16 @@ async function getPag1(pokeApiLinkParam) {
 
     }
     toggleSpinner()
-    toggleAddVisivel()
+    
+
+    
+   
+
+
     //getElementById(pokemonId).innerHTML +="<button onclick='previousPagesssss(\""+response.data.previous+"\")'>Previous</button>"
     nextLink = response.data.next
     previousLink = response.data.previous
+
 
 
 }
@@ -217,11 +226,13 @@ function addPokemon(namePoke, imgLink) {
         teamStorageRealocando.push(pokemonSelect)
         localStorage.setItem(listPokemonCardKey, JSON.stringify(teamStorageRealocando))
         upPokeAdd()
-        getPag1(pokeApiLink)
         
+        getPag1(pokeApiLink)
+
+
     }/* um if para estabelecer que que o comprimento pode ir somente até 6 lugares (length é o total e conta a partir do 1)
     como nao precisei mais do if como mencionei a cima, já dou o push direito na resposta do if */
-
+    
 }
 /*declarei primeiro as variaveis (nextLink e previousLink) fora sem receber nenhum valor e aqui dentro de minha funcao estou
 empregando valores a elas */
@@ -232,30 +243,30 @@ getPag1(pokeApiLink)
 
 function upPokeAdd() {
     
-    document.getElementById("botao-salvar").style.display = "inline-block"
-    document.getElementById("botao-excluir").style.display = "inline-block"
-    document.getElementById("nameTeam").style.display = "block"
+    toggleBtnCriarTime()
+    
     console.log(getElementById(pokeAddTeamId))
     // document.querySelectorAll(".botao-add").forEach(element => {
     //     element.style.display = "inline-block"
     // });
     //botaoAddVisivel()
-    toggleAddVisivel()
+   
     getElementById(pokeAddTeamId).innerHTML = ""
 
     getTeamStorage().forEach(function (element, index) {
         console.log(element, index)
-        
+
         getElementById(pokeAddTeamId).innerHTML += '<div class="col-xl-2 col-md-3 col-sm-4 col-6 mb-4" >' +
             '<div value="' + index + '"><img src="' + element.PokemonImage + '"  alt="' + element.NamePokemon + '">' +
             '<h6 value="' + index + '">' + element.NamePokemon + '</h6></div>' +
             "<a href='base/move-list.html' class='list-group-item list-group-item-action'><button onclick= 'moreInfoPokeSelect(\"" + element.NamePokemon + "\",\"" + element.PokemonImage + "\")' class='btn btn-primary btn-sm'> More Info</button></a>" +
-            "<button onclick= 'deleteToTeam(" + index + ")' class='btn btn-danger' id='addToTeam'>Delete To Team</button>" +
+            "<button onclick= 'deleteToTeam(" + index + ")' class='btn btn-danger' >Delete To Team</button>" +
             '</div>'
     });
-   
-   
+    
+    
 }
+
 function deleteToTeam(poke) {
 
     let realocandoGetTeamStorage = getTeamStorage()
@@ -268,7 +279,7 @@ function deleteToTeam(poke) {
     upPokeAdd()
     getPag1(pokeApiLink)
     upPokeAdd()
-
+    
 
 }
 function toggleSpinner() {/*essa função faz com que a tela funciona como um interruptor atribuindo o valor de none 
@@ -304,79 +315,163 @@ mostra a visualização padrao assim  que carregar todos os pokemons*/
 //     }
 
 // }
-function botaoAddVisivel() {
-    document.querySelectorAll(".botao-add").forEach(element => {
-        element.style.display = "inline-block"
-    });
-}
 
-
-function toggleAddVisivel(){
-    var pokemonEquipe = document.getElementById("nameTeam").style.display == "block"
-    if(pokemonEquipe){
-        botaoAddVisivel()
+function toggleAddVisivel() {
+          return document.querySelectorAll(".botao-add").forEach(element => {
+                 element.style.display = "inline-block"
+        });
     }
-}
 
-toggleAddVisivel()
 
-getElementById(btnSalvar).addEventListener('click', function(event){
+
+
+getElementById(btnSalvarId).addEventListener('click', function (event) {
     event.preventDefault();
-    let dadosEquipe = {
-        nameTeam: getElementById(nameTeamPokeId).value,
-        pokeOne: getTeamStorage()[0],
-        pokeTwo: getTeamStorage()[1],
-        pokeThree: getTeamStorage()[2],
-        pokeFour: getTeamStorage()[3],
-        pokeFive: getTeamStorage()[4],
-        pokeSix: getTeamStorage()[5],
-        btnExcluir: "<button class='btn btn-ghost-danger'>Excluir</button>"
+    if (getElementById(nameTeamPokeId).value != "") {
+
+
+        let dadosEquipe = {
+            nameTeam: getElementById(nameTeamPokeId).value,
+            pokeOne: getTeamStorage()[0],
+            pokeTwo: getTeamStorage()[1],
+            pokeThree: getTeamStorage()[2],
+            pokeFour: getTeamStorage()[3],
+            pokeFive: getTeamStorage()[4],
+            pokeSix: getTeamStorage()[5],
+
+        }
+
+        console.log(dadosEquipe)
+        const realocandoGetListTeamStorage = getListTeamStorage()
+        realocandoGetListTeamStorage.push(dadosEquipe)
+        localStorage.setItem(listTeamKey, JSON.stringify(realocandoGetListTeamStorage))
+
+        getElementById(nameTeamPokeId).value = ""
+        toggleBtnSalvar()
+        
+        
+
+    } else {
+        alert("Preencher Nome do Time")
     }
-   
-    console.log(dadosEquipe)
-    const realocandoGetListTeamStorage = getListTeamStorage()
-    realocandoGetListTeamStorage.push(dadosEquipe)
-    localStorage.setItem(listTeamKey, JSON.stringify(realocandoGetListTeamStorage))
-    
-    getElementById(nameTeamPokeId).value = ""
     
 
 })
-function preencherListaTime(){
+
+function preencherListaTime() {
     getElementById(listaTimeId).innerHTML = ""
-getListTeamStorage().forEach(function(element, index){
-   
-    getElementById(listaTimeId).innerHTML += '<tr>' +
-    '<th scope="row">'+(index+1 )+'</th>' +
-    '<td><h6>'+element.nameTeam+'<h6></td>' + 
-    '<td>'+
-    '<div><img  style="width: 3rem; height:3rem" src="' + element.pokeOne.PokemonImage + '"  alt="' + element.pokeOne.NamePokemon + '"></div>' +
-    '<h6>' + element.pokeOne.NamePokemon + '</h6></td>' +
-    '<td>'+
-    '<div><img style="width: 3rem; height:3rem" src="' + element.pokeTwo.PokemonImage + '"  alt="' + element.pokeTwo.NamePokemon + '"></div>' +
-    '<h6>' + element.pokeTwo.NamePokemon + '</h6></td>' +
-    '<td>'+
-    '<div><img style="width: 3rem; height:3rem" src="' + element.pokeThree.PokemonImage + '"  alt="' + element.pokeThree.NamePokemon + '"></div>' +
-    '<h6>' + element.pokeThree.NamePokemon + '</h6></td>' +
-    '<td>'+
-    '<div><img style="width: 3rem; height:3rem" src="' + element.pokeFour.PokemonImage + '"  alt="' + element.pokeFour.NamePokemon + '"></div>' +
-    '<h6>' + element.pokeFour.NamePokemon + '</h6></td>' +
-    '<td>'+
-    '<div><img style="width: 3rem; height:3rem" src="' + element.pokeFive.PokemonImage + '"  alt="' + element.pokeFive.NamePokemon + '"></div>' +
-    '<h6>' + element.pokeFive.NamePokemon + '</h6></td>' +
-    '<td>'+
-    '<div><img style="width: 3rem; height:3rem" src="' + element.pokeSix.PokemonImage + '"  alt="' + element.pokeSix.NamePokemon + '"></div>' +
-    '<h6>' + element.pokeSix.NamePokemon + '</h6></td>' +
-    '<td><h3>'+element.btnExcluir+'</h3></td>' 
-   
-})
+    getListTeamStorage().forEach(function (element, index) {
+
+        getElementById(listaTimeId).innerHTML += '<tr>' +
+            '<th scope="row">' + (index + 1) + '</th>' +
+            '<td><h6>' + element.nameTeam + '<h6></td>' +
+            '<td>' +
+            '<div><img  style="width: 3rem; height:3rem" src="' + element.pokeOne.PokemonImage + '"  alt="' + element.pokeOne.NamePokemon + '"></div>' +
+            '<h6>' + element.pokeOne.NamePokemon + '</h6></td>' +
+            '<td>' +
+            '<div><img style="width: 3rem; height:3rem" src="' + element.pokeTwo.PokemonImage + '"  alt="' + element.pokeTwo.NamePokemon + '"></div>' +
+            '<h6>' + element.pokeTwo.NamePokemon + '</h6></td>' +
+            '<td>' +
+            '<div><img style="width: 3rem; height:3rem" src="' + element.pokeThree.PokemonImage + '"  alt="' + element.pokeThree.NamePokemon + '"></div>' +
+            '<h6>' + element.pokeThree.NamePokemon + '</h6></td>' +
+            '<td>' +
+            '<div><img style="width: 3rem; height:3rem" src="' + element.pokeFour.PokemonImage + '"  alt="' + element.pokeFour.NamePokemon + '"></div>' +
+            '<h6>' + element.pokeFour.NamePokemon + '</h6></td>' +
+            '<td>' +
+            '<div><img style="width: 3rem; height:3rem" src="' + element.pokeFive.PokemonImage + '"  alt="' + element.pokeFive.NamePokemon + '"></div>' +
+            '<h6>' + element.pokeFive.NamePokemon + '</h6></td>' +
+            '<td>' +
+            '<div><img style="width: 3rem; height:3rem" src="' + element.pokeSix.PokemonImage + '"  alt="' + element.pokeSix.NamePokemon + '"></div>' +
+            '<h6>' + element.pokeSix.NamePokemon + '</h6></td>' +
+            '<td><button class="btn btn-ghost-danger">Excluir</button></td>'
+
+    })
 
 }
-function excluirEscolha(p1){
-    let storage = getTeamStorage()
-    storage.filter(function(element, index){
-        console.log(element, index)
-        return p1 != index
-    })
-    }
 
+function excluirStorage() {
+
+    let realocandoGetTeamStorage = getTeamStorage()
+    realocandoGetTeamStorage = realocandoGetTeamStorage.filter(function (element, index) {
+        console.log(element, index)
+        return index == null
+    })
+
+    localStorage.setItem(listPokemonCardKey, JSON.stringify(realocandoGetTeamStorage))
+    upPokeAdd()
+    getPag1(pokeApiLink)
+    toggleBtnExcluir()
+}
+function toggleBtnCriarTime(){
+    var isBtnCriarTimeDisplayBlock = 
+    getElementById(btnCriarTimeId).style.display = "inline-block"
+    if(isBtnCriarTimeDisplayBlock) {
+        getElementById(btnCriarTimeId).style.display = "none"
+        getElementById(btnExcluirId).style.display ="inline-block"
+        getElementById(btnSalvarId).style.display ="inline-block"
+        getElementById(pokeAddTeamId).style.display ="flex"
+        getElementById(nameTeamId).style.display ="block"
+         
+        // document.querySelectorAll(".botao-add").forEach(element => {
+        //     element.style.display = "inline-block"
+        // });
+        
+        
+        
+    }else {
+        getElementById(btnCriarTimeId).style.display = "inline-block"
+        getElementById(btnExcluirId).style.display ="none"
+        getElementById(btnSalvarId).style.display ="none"
+        getElementById(pokeAddTeamId).style.display ="none"
+        getElementById(nameTeamId).style.display ="none"
+        // document.querySelectorAll(".botao-add").forEach(element => {
+        //     element.style.display = "none"
+        // });
+        
+    }
+}
+function toggleBtnSalvar(){
+    var isBtnSalvarDisplayBlock = 
+    getElementById(btnSalvarId).style.display = "none"
+    if(isBtnSalvarDisplayBlock) {
+        getElementById(btnCriarTimeId).style.display = "inline-block"
+        getElementById(btnExcluirId).style.display ="none"
+        getElementById(btnSalvarId).style.display ="none"
+        getElementById(pokeAddTeamId).style.display ="none"
+        getElementById(nameTeamId).style.display ="none"
+        // document.querySelectorAll(".botao-add").forEach(element => {
+        //     element.style.display = "none"
+        // });
+        
+        
+    }else {    
+        getElementById(btnCriarTimeId).style.display = "none"
+        getElementById(btnExcluirId).style.display ="inline-block"
+        getElementById(btnSalvarId).style.display ="inline-block"
+        getElementById(pokeAddTeamId).style.display ="flex"
+        getElementById(nameTeamId).style.display ="block"
+        
+        // document.querySelectorAll(".botao-add").forEach(element => {
+        //     element.style.display = "inline-block"
+        // });
+    }
+}
+function toggleBtnExcluir(){
+    var isBtnSalvarDisplayBlock = 
+    getElementById(btnExcluirId).style.display = "none"
+    if(isBtnSalvarDisplayBlock) {
+        getElementById(btnCriarTimeId).style.display = "inline-block"
+        getElementById(btnExcluirId).style.display ="none"
+        getElementById(btnSalvarId).style.display ="none"
+        getElementById(pokeAddTeamId).style.display ="none"
+        getElementById(nameTeamId).style.display ="none"
+        
+        
+    }else {    
+        getElementById(btnCriarTimeId).style.display = "none"
+        getElementById(btnExcluirId).style.display ="inline-block"
+        getElementById(btnSalvarId).style.display ="inline-block"
+        getElementById(pokeAddTeamId).style.display ="flex"
+        getElementById(nameTeamId).style.display ="block"
+    }
+}
