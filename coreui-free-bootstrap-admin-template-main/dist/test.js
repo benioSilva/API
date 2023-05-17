@@ -14,9 +14,9 @@ var param
 var nameTeamId = "nameTeam"
 var tempStorageKey = "pokeSelect"
 var nameTeamPokeId = "nome-time"
-var listTeamKey = "listTeam"
+
 var btnSalvarId = "botao-salvar"
-var listaTimeId = "lista-de-time"
+
 var btnExcluirId = "botao-excluir"
 var btnCriarTimeId = "botao-criar-time"
 limparLocalStorage()
@@ -35,14 +35,6 @@ function getTeamStorage() {
     return JSON.parse(StorageTeamAdd) || []  /*maneira mais pratica de dizer que pode estar preenchida ou nulo (|| = a "ou" [] = a "null")
     dessa forma nao precisei faz o if para validar que o localStorage estava null para  inserir os dados*/
 }
-
-function getListTeamStorage() {
-    const StorageListTeamAdd = localStorage.getItem(listTeamKey)
-    return JSON.parse(StorageListTeamAdd) || []  /*maneira mais pratica de dizer que pode estar preenchida ou nulo (|| = a "ou" [] = a "null")
-    dessa forma nao precisei faz o if para validar que o localStorage estava null para  inserir os dados*/
-}
-
-
 
 //var namePokemonLink
 
@@ -348,36 +340,6 @@ getElementById(btnSalvarId).addEventListener('click', function (event) {
 
 })
 
-function preencherListaTime() {
-    getElementById(listaTimeId).innerHTML = ""
-    getListTeamStorage().forEach(function (element, index) {
-
-        getElementById(listaTimeId).innerHTML += '<tr>' +
-            '<th scope="row">' + (index + 1) + '</th>' +
-            '<td><h6>' + element.nameTeam + '<h6></td>' +
-            '<td>' +
-            '<div><img  style="width: 3rem; height:3rem" src="' + element.pokeOne.PokemonImage + '"  alt="' + element.pokeOne.NamePokemon + '"></div>' +
-            '<h6>' + element.pokeOne.NamePokemon + '</h6></td>' +
-            '<td>' +
-            '<div><img style="width: 3rem; height:3rem" src="' + element.pokeTwo.PokemonImage + '"  alt="' + element.pokeTwo.NamePokemon + '"></div>' +
-            '<h6>' + element.pokeTwo.NamePokemon + '</h6></td>' +
-            '<td>' +
-            '<div><img style="width: 3rem; height:3rem" src="' + element.pokeThree.PokemonImage + '"  alt="' + element.pokeThree.NamePokemon + '"></div>' +
-            '<h6>' + element.pokeThree.NamePokemon + '</h6></td>' +
-            '<td>' +
-            '<div><img style="width: 3rem; height:3rem" src="' + element.pokeFour.PokemonImage + '"  alt="' + element.pokeFour.NamePokemon + '"></div>' +
-            '<h6>' + element.pokeFour.NamePokemon + '</h6></td>' +
-            '<td>' +
-            '<div><img style="width: 3rem; height:3rem" src="' + element.pokeFive.PokemonImage + '"  alt="' + element.pokeFive.NamePokemon + '"></div>' +
-            '<h6>' + element.pokeFive.NamePokemon + '</h6></td>' +
-            '<td>' +
-            '<div><img style="width: 3rem; height:3rem" src="' + element.pokeSix.PokemonImage + '"  alt="' + element.pokeSix.NamePokemon + '"></div>' +
-            '<h6>' + element.pokeSix.NamePokemon + '</h6></td>' +
-            '<td><button class="btn btn-ghost-danger">Excluir</button></td>'
-
-    })
-
-}
 
 function excluirStorage() {
 

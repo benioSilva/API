@@ -44,6 +44,7 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/prismjs@1.23.0/themes/prism.css">
   <link href="css/examples.css" rel="stylesheet">
   <!-- Global site tag (gtag.js) - Google Analytics-->
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
   <script async="" src="https://www.googletagmanager.com/gtag/js?id=UA-118965717-3"></script>
   <script>
     window.dataLayer = window.dataLayer || [];
@@ -57,7 +58,7 @@
     // Bootstrap ID
     gtag('config', 'UA-118965717-5');
   </script>
-  <link rel="canonical" href="https://coreui.io/docs/components/card/">
+  <link rel="canonical" href="https://coreui.io/docs/content/tables/">
 </head>
 
 <body>
@@ -316,115 +317,46 @@
             <li class="breadcrumb-item">
               <!-- if breadcrumb is single--><a href="#">Base</a>
             </li>
-            <li class="breadcrumb-item active"><span>Cards</span></li>
+            <li class="breadcrumb-item active"><span>Tables</span></li>
           </ol>
         </nav>
       </div>
     </header>
     <div class="body flex-grow-1 px-3">
       <div class="container-lg">
+        <div class="car"></div>
         <div class="card mb-4">
-          <div class="card-header"><strong>Card</strong><span class="small ms-1">Example</span></div>
+          <div class="card-header"><strong>Tables</strong><span class="small ms-1">Basic example</span></div>
           <div class="card-body">
-            <p class="text-medium-emphasis small">Cards are built with as little markup and styles as possible but still
-              manage to deliver a bunch of control and customization. Built with flexbox, they offer easy alignment and
-              mix well with other Bootstrap components. Cards have no top, left, and right margins by default, so use <a
-                href="https://coreui.io/docs/utilities/spacing/">spacing utilities</a> as needed. They have no fixed
-              width to start, so they’ll fill the full width of its parent.</p>
-            <p class="text-medium-emphasis small">Below is an example of a basic card with mixed content and a fixed
-              width. Cards have no fixed width to start, so they’ll naturally fill the full width of its parent element.
-              This is easily customized with our various <a href="#sizing">sizing options</a>.</p>
-            <div class="example">
-              <ul class="nav nav-tabs" role="tablist">
-                <li class="nav-item"><a class="nav-link active" data-coreui-toggle="tab" href="#preview-701" role="tab">
-                    <svg class="icon me-2">
-                      <use xlink:href="vendors/@coreui/icons/svg/free.svg#cil-media-play"></use>
-                    </svg>Preview</a></li>
-                <li class="nav-item"><a class="nav-link" href="https://coreui.io/docs/components/card/#example"
-                    target="_blank">
-                    <svg class="icon me-2">
-                      <use xlink:href="vendors/@coreui/icons/svg/free.svg#cil-code"></use>
-                    </svg>Code</a></li>
-              </ul>
-              <div class="tab-content rounded-bottom">
-                <div class="tab-pane p-3 active preview" role="tabpanel" id="preview-701">
-                  <div class="card" style="width: 18rem;"><img class="card-img-top" src="assets/img/full.jpg" alt="">
-                    <div class="card-body">
-                      <h5 class="card-title">Card title</h5>
-                      <p class="card-text">Some quick example text to build on the card title and make up the bulk of
-                        the card's content.</p><a class="btn btn-primary" href="#">Go somewhere</a>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="card mb-4">
-          <div class="card-header"><strong>Card</strong><span class="small ms-1">Images</span></div>
-          <div class="card-body">
-            <p class="text-medium-emphasis small"><code>.card-img-top</code> places a picture to the top of the card.
-              With <code>.card-text</code>, text can be added to the card. Text within <code>.card-text</code> can
-              additionally be styled with the regular HTML tags.</p>
-            <div class="example">
-              <ul class="nav nav-tabs" role="tablist">
-                <li class="nav-item"><a class="nav-link active" data-coreui-toggle="tab" href="#preview-869" role="tab">
-                    <svg class="icon me-2">
-                      <use xlink:href="vendors/@coreui/icons/svg/free.svg#cil-media-play"></use>
-                    </svg>Preview</a></li>
-                <li class="nav-item"><a class="nav-link"
-                    href="https://coreui.io/docs/components/card/#titles-text-and-links" target="_blank">
-                    <svg class="icon me-2">
-                      <use xlink:href="vendors/@coreui/icons/svg/free.svg#cil-code"></use>
-                    </svg>Code</a></li>
-              </ul>
-              <div class="tab-content rounded-bottom">
-                <div class="tab-pane p-3 active preview" role="tabpanel" id="preview-869">
-                  <div class="card" style="width: 18rem;"><img class="card-img-top" src="assets/img/full.jpg" alt="">
-                    <div class="card-body">
-                      <p class="card-text">Some quick example text to build on the card title and make up the bulk of
-                        the card's content.</p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
+            <p class="text-medium-emphasis small">Using the most basic table markup, here’s how
+              <code>.table</code>-based tables look in Bootstrap.
+            </p>
 
-        <div class="card mb-4">
-          <div class="card-header"><strong>Card</strong><span class="small ms-1">Kitchen sink</span></div>
-          <div class="card-body">
-            <p class="text-medium-emphasis small">Combine and match many content types to build the card you need, or
-              throw everything in there. Shown below are image styles, blocks, text styles, and a list group—all wrapped
-              in a fixed-width card.</p>
-            <div class="example">
-              <ul class="nav nav-tabs" role="tablist">
-                <li class="nav-item"><a class="nav-link active" data-coreui-toggle="tab" href="#preview-720" role="tab">
-                    <svg class="icon me-2">
-                      <use xlink:href="vendors/@coreui/icons/svg/free.svg#cil-media-play"></use>
-                    </svg>Preview</a></li>
-                <li class="nav-item"><a class="nav-link" href="https://coreui.io/docs/components/card/#kitchen-sink"
-                    target="_blank">
-                    <svg class="icon me-2">
-                      <use xlink:href="vendors/@coreui/icons/svg/free.svg#cil-code"></use>
-                    </svg>Code</a></li>
-              </ul>
-              <div class="tab-content rounded-bottom">
-                <div class="tab-pane p-3 active preview" role="tabpanel" id="preview-720">
-                  <div class="card" style="width: 18rem;"><img class="card-img-top" src="assets/img/full.jpg" alt="">
-                    <div class="card-body">
-                      <h5 class="card-title">Card title</h5>
-                      <p class="card-text">Some quick example text to build on the card title and make up the bulk of
-                        the card's content.</p>
+            <div class="body flex-grow-1 px-3">
+              <div class="container-lg">
+                <div class="card mb-4">
+
+                  <div class="tab-content rounded-bottom">
+                    <div class="tab-pane p-3 active preview" role="tabpanel" id="preview-81">
+                      <table class="table table-striped">
+                        <thead>
+                          <tr>
+                            <th scope="col">Nº</th>
+                            <th scope="col">Nome do Time</th>
+                            <th scope="col">Pokemon 1</th>
+                            <th scope="col">Pokemon 2</th>
+                            <th scope="col">Pokemon 3</th>
+                            <th scope="col">Pokemon 4</th>
+                            <th scope="col">Pokemon 5</th>
+                            <th scope="col">Pokemon 6</th>
+                            <th scope="col">Alterar Time</th>
+                          </tr>
+                        </thead>
+                        <tbody id="lista-de-time">
+
+                        </tbody>
+                      </table>
                     </div>
-                    <ul class="list-group list-group-flush">
-                      <li class="list-group-item">An item</li>
-                      <li class="list-group-item">A second item</li>
-                      <li class="list-group-item">A third item</li>
-                    </ul>
-                    <div class="card-body"><a class="card-link" href="#">Card link</a><a class="card-link"
-                        href="#">Another link</a></div>
                   </div>
                 </div>
               </div>
@@ -434,6 +366,7 @@
       </div>
     </div>
   </div>
+  
   <footer class="footer">
     <div><a href="https://coreui.io">CoreUI </a><a href="https://coreui.io">Bootstrap Admin Template</a> © 2022
       creativeLabs.</div>
@@ -443,8 +376,7 @@
   <!-- CoreUI and necessary plugins-->
   <script src="vendors/@coreui/coreui/js/coreui.bundle.min.js"></script>
   <script src="vendors/simplebar/js/simplebar.min.js"></script>
-  <script>
-  </script>
+<script src="listaTimesPoke.js"></script>
 
 </body>
 
