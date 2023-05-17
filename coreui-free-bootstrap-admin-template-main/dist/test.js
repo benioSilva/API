@@ -14,7 +14,7 @@ var param
 var nameTeamId = "nameTeam"
 var tempStorageKey = "pokeSelect"
 var nameTeamPokeId = "nome-time"
-
+var listTeamKey = "listTeam"
 var btnSalvarId = "botao-salvar"
 
 var btnExcluirId = "botao-excluir"
@@ -35,7 +35,11 @@ function getTeamStorage() {
     return JSON.parse(StorageTeamAdd) || []  /*maneira mais pratica de dizer que pode estar preenchida ou nulo (|| = a "ou" [] = a "null")
     dessa forma nao precisei faz o if para validar que o localStorage estava null para  inserir os dados*/
 }
-
+function getListTeamStorage() {
+    const StorageListTeamAdd = localStorage.getItem(listTeamKey)
+    return JSON.parse(StorageListTeamAdd) || []  /*maneira mais pratica de dizer que pode estar preenchida ou nulo (|| = a "ou" [] = a "null")
+    dessa forma nao precisei faz o if para validar que o localStorage estava null para  inserir os dados*/
+}
 //var namePokemonLink
 
 
@@ -159,7 +163,7 @@ async function getPag1(pokeApiLinkParam) {
             getElementById(pokemonId).innerHTML += '<div class="col-xl-2 col-md-3 col-sm-4 col-6 mb-4"  class="validacao">' +
                 '<div value="' + index + '"><img src="' + link + '"  alt="' + element.name + '"></div>' +
                 '<h6 value="' + index + '">' + element.name + '</h6>' +
-                "<a href='base/move-list.html' target='_blank' class='list-group-item list-group-item-action'><button onclick= 'moreInfoPokeSelect(\"" + element.name + "\",\"" + link + "\")' class='btn btn-primary btn-sm'> More Info</button></a>" +
+                "<a href='base/move-list.html'  class='list-group-item list-group-item-action'><button onclick= 'moreInfoPokeSelect(\"" + element.name + "\",\"" + link + "\")' class='btn btn-primary btn-sm'> More Info</button></a>" +
                 "<button onclick= 'addPokemon(\"" + element.name + "\",\"" + link + "\")' class='btn btn-success botao-add' style='display: none;'>Add To Team</button>" +
                 '</div>'
 
@@ -168,7 +172,7 @@ async function getPag1(pokeApiLinkParam) {
             getElementById(pokemonId).innerHTML += '<div class="col-xl-2 col-md-3 col-sm-4 col-6 mb-4"  class="validacao">' +
                 '<div value="' + index + '"><img src="' + link + '"  alt="' + element.name + '"></div>' +
                 '<h6 value="' + index + '">' + element.name + '</h6>' +
-                "<a href='base/move-list.html' target='_blank' class='list-group-item list-group-item-action'><button onclick= 'moreInfoPokeSelect(\"" + element.name + "\",\"" + link + "\")' class='btn btn-primary btn-sm'> More Info</button></a>" +
+                "<a href='base/move-list.html'  class='list-group-item list-group-item-action'><button onclick= 'moreInfoPokeSelect(\"" + element.name + "\",\"" + link + "\")' class='btn btn-primary btn-sm'> More Info</button></a>" +
                 '</div>'
         }
 
@@ -244,7 +248,7 @@ function upPokeAdd() {
         getElementById(pokeAddTeamId).innerHTML += '<div class="col-xl-2 col-md-3 col-sm-4 col-6 mb-4" >' +
             '<div value="' + index + '"><img src="' + element.PokemonImage + '"  alt="' + element.NamePokemon + '">' +
             '<h6 value="' + index + '">' + element.NamePokemon + '</h6></div>' +
-            "<a href='base/move-list.html' target='_blank' class='list-group-item list-group-item-action'><button onclick= 'moreInfoPokeSelect(\"" + element.NamePokemon + "\",\"" + element.PokemonImage + "\")' class='btn btn-primary btn-sm'> More Info</button></a>" +
+            "<a href='base/move-list.html'  class='list-group-item list-group-item-action'><button onclick= 'moreInfoPokeSelect(\"" + element.NamePokemon + "\",\"" + element.PokemonImage + "\")' class='btn btn-primary btn-sm'> More Info</button></a>" +
             "<button onclick= 'deleteToTeam(" + index + ")' class='btn btn-danger' >Delete To Team</button>" +
             '</div>'
     });
