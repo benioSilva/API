@@ -14,10 +14,10 @@ function getStorageCadastros() {
     const storageDadosCadastrais = localStorage.getItem(dadosCadastroKey)
     return JSON.parse(storageDadosCadastrais) || []
 }
-function getStorageProvisorio() {
-    const storageTodosDadosCadastrais = localStorage.getItem(storageProvisorio)
-    return JSON.parse(storageTodosDadosCadastrais) || []
-}
+// function getStorageProvisorio() {
+//     const storageTodosDadosCadastrais = localStorage.getItem(storageProvisorio)
+//     return JSON.parse(storageTodosDadosCadastrais) || []
+// }
 // function comparacaoSenha(){
 //     if(getElementById(passwordId).value == getElementById(repeatPasswordId).value){
 
@@ -26,30 +26,38 @@ function getStorageProvisorio() {
 // }
 
 
-async function dadosPreenchidos(){
-    if (getElementById(usernameId).value == ""){
+function dadosPreenchidos() {
+    if (getElementById(usernameId).value == "") {
         alert("Preencher dados")
+        return false
     }
-    if (getElementById(emailId).value == ""){
+    if (getElementById(emailId).value == "") {
         alert("Preencher dados")
+        return false
     }
-    if (getElementById(passwordId).value == ""){
+    if (!getElementById(passwordId).value) {
         alert("Preencher dados")
+        return false
     }
-    if (getElementById(repeatPasswordId).value == ""){
+    if (getElementById(repeatPasswordId).value == "") {
         alert("Preencher dados")
-    }
+        return false
+    } 
+    return true
 }
 
-getElementById(btnCreateAccountId).addEventListener('click', async function (event) {
+getElementById(btnCreateAccountId).addEventListener('click', function (event) {
     event.preventDefault();
-    
-    if (getElementById(passwordId).value == ""  != getElementById(repeatPasswordId).value) {
+    if(!dadosPreenchidos()){
+        return 
+    }
+
+    if (getElementById(passwordId).value != getElementById(repeatPasswordId).value) {
         alert("senha não Confere")
 
 
     } else {
-        await dadosPreenchidos()
+
         let listaTodasInfo = {
             username: getElementById(usernameId).value,
             email: getElementById(emailId).value,
@@ -57,10 +65,10 @@ getElementById(btnCreateAccountId).addEventListener('click', async function (eve
             password: getElementById(passwordId).value
 
         }
-        
+
         const cadastros = getStorageCadastros()
         cadastros.push(listaTodasInfo)
-            localStorage.setItem(dadosCadastroKey, JSON.stringify(cadastros))
+        localStorage.setItem(dadosCadastroKey, JSON.stringify(cadastros))
 
         getElementById(usernameId).value = ""
         getElementById(emailId).value = ""
