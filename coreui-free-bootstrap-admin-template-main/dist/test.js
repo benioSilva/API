@@ -19,28 +19,33 @@ var btnSalvarId = "botao-salvar"
 var editarTimeKey = "editarTime"
 var btnExcluirId = "botao-excluir"
 var btnCriarTimeId = "botao-criar-time"
-var lastLink 
+var lastLink
 initPage()
-async function initPage(){
+async function initPage() {
     limparLocalStorage()
-    await getPag1(pokeApiLink)
+    await loadPagePokemon(pokeApiLink)
     loadEditPokemon()
-    //mostrarAdd()
-    
+    /*funcao para iniciar a pagina contendo tudo que preciso ao iniciar a pagina: 
+    - Primeiro: Limpo o storage da escolha de pokemons que ira ser o um time
+    - Segundo:  Faco a chamada com await dos pokemons para carregar todos primeiro e depois eu prosseguir  com o resto do codigo
+    - Terceiro: Carrego a funcao loadEdit que consiste em trazer um time salvo que escolhi editar ao clicar no botao editar e 
+    passar ele para um local Storage proprio (no caso eu passo o index) apos passar pela validacao dos if's eu passo o time que 
+    estou editando para o localStorage do Criar time   */
+
 }
 
 
 function limparLocalStorage() {
     let realocandoGetTeamStorage = getTeamStorage()
-    if(realocandoGetTeamStorage){
+    if (realocandoGetTeamStorage) {
         realocandoGetTeamStorage = realocandoGetTeamStorage.filter(function (element, index) {
-            console.log(element, index)
+
             return index == null
         })
-    
+
         localStorage.setItem(listPokemonCardKey, JSON.stringify(realocandoGetTeamStorage))
     }
-    
+
 }
 function getEditarStorage() {
     const storageEditar = localStorage.getItem(editarTimeKey)
@@ -61,19 +66,19 @@ function getListTeamStorage() {
 
 function previousPage() {
     if (previousLink) {
-        getPag1(previousLink)
+        loadPagePokemon(previousLink)
 
 
     }
 }
 function previousPagesssss(link) {
-    console.log(link)
-    getPag1(link)
+    
+    loadPagePokemon(link)
 }
 function nextPage() {
-    if (nextLink) {/*faco um if para verificar se nextLink existe(condicao do if: se nextLink existe) me mostra o getPag1
+    if (nextLink) {/*faco um if para verificar se nextLink existe(condicao do if: se nextLink existe) me mostra o loadPagePokemon
     com o nextLink de paramentro */
-        getPag1(nextLink)
+        loadPagePokemon(nextLink)
     }
 }
 
@@ -147,7 +152,7 @@ async function getSprites(para) {
 
 }
 
-async function getPag1(pokeApiLinkParam) {
+async function loadPagePokemon(pokeApiLinkParam) {
     lastLink = pokeApiLinkParam
 
     toggleSpinner()
@@ -155,8 +160,8 @@ async function getPag1(pokeApiLinkParam) {
     const response = await axios.get(pokeApiLinkParam)
 
     const listName = response.data.results
-    /*como o axios.get recebe o mesmo parametro que a funcao getPag1, toda vez
-    que o chamo o getPag1 com um valor diferente no paramentro ele me retorna valores difeerentes sob a mesma funcao (declarar a
+    /*como o axios.get recebe o mesmo parametro que a funcao loadPagePokemon, toda vez
+    que o chamo o loadPagePokemon com um valor diferente no paramentro ele me retorna valores difeerentes sob a mesma funcao (declarar a
         variavel antes com os valores que eu quero) */
     getElementById(pokemonId).innerHTML = ""
     //primeiro começa com a lista limpa
@@ -172,7 +177,7 @@ async function getPag1(pokeApiLinkParam) {
     for (let index = 0; index < response.data.results.length; index++) {
         const element = listName[index];
         param = element.name
-        console.log(param)
+       
 
         const link = await getSprites(element.name)
 
@@ -207,24 +212,22 @@ async function getPag1(pokeApiLinkParam) {
 
 }
 function moreInfoPokeSelect(namePokeSelect, imgLinkSelect) {
-    console.log(namePokeSelect, imgLinkSelect)
+   
     let moreInfoSelect = {
         namePokemonSelect: namePokeSelect,
         pokemonImageSelect: imgLinkSelect
     }
     localStorage.setItem(tempStorageKey, JSON.stringify(moreInfoSelect))
-    console.log(moreInfoSelect)
+   
 }
 
 function addPokemon(namePoke, imgLink) {
-    console.log(namePoke, imgLink)
+   
 
     let pokemonSelect = {
         NamePokemon: namePoke,
         PokemonImage: imgLink
     }
-    console.log(pokemonSelect)
-
 
 
     const teamStorageRealocando = getTeamStorage()
@@ -235,7 +238,7 @@ function addPokemon(namePoke, imgLink) {
         toggleBtnCriarTime()
 
         mostrarAdd()
-        getPag1(lastLink)
+        loadPagePokemon(lastLink)
 
 
     }/* um if para estabelecer que que o comprimento pode ir somente até 6 lugares (length é o total e conta a partir do 1)
@@ -246,34 +249,34 @@ function addPokemon(namePoke, imgLink) {
 empregando valores a elas */
 
 
-function loadEditPokemon(){
+function loadEditPokemon() {
     const index = localStorage.getItem(editarTimeKey)
-    if (index){
-       const time = getListTeamStorage()[index]
-       const timeArray = []
-       if(time.pokeOne){
-        timeArray.push(time.pokeOne)
-       }
-       if(time.pokeTwo){
-        timeArray.push(time.pokeTwo)
-       }
-       if(time.pokeThree){
-        timeArray.push(time.pokeThree)
-       }
-       if(time.pokeFour){
-        timeArray.push(time.pokeFour)
-       }
-       if(time.pokeFive){
-        timeArray.push(time.pokeFive)
-       }
-       if(time.pokeSix){
-        timeArray.push(time.pokeSix)
-       }
-       localStorage.setItem(listPokemonCardKey, JSON.stringify(timeArray))
-       getElementById(nameTeamPokeId).value = time.nameTeam
-       upPokeAdd()
-       
-      
+    if (index) {
+        const time = getListTeamStorage()[index]
+        const timeArray = []
+        if (time.pokeOne) {
+            timeArray.push(time.pokeOne)
+        }
+        if (time.pokeTwo) {
+            timeArray.push(time.pokeTwo)
+        }
+        if (time.pokeThree) {
+            timeArray.push(time.pokeThree)
+        }
+        if (time.pokeFour) {
+            timeArray.push(time.pokeFour)
+        }
+        if (time.pokeFive) {
+            timeArray.push(time.pokeFive)
+        }
+        if (time.pokeSix) {
+            timeArray.push(time.pokeSix)
+        }
+        localStorage.setItem(listPokemonCardKey, JSON.stringify(timeArray))
+        getElementById(nameTeamPokeId).value = time.nameTeam
+        upPokeAdd()
+
+
     }
 }
 
@@ -285,13 +288,13 @@ function upPokeAdd() {
     toggleBtnCriarTime()
 
     mostrarAdd()
-    console.log(getElementById(pokeAddTeamId))
+    
 
 
     getElementById(pokeAddTeamId).innerHTML = ""
 
     getTeamStorage().forEach(function (element, index) {
-        console.log(element, index)
+        
 
         getElementById(pokeAddTeamId).innerHTML += '<div class="col-xl-2 col-md-3 col-sm-4 col-6 mb-4" >' +
             '<div value="' + index + '"><img src="' + element.PokemonImage + '"  alt="' + element.NamePokemon + '">' +
@@ -301,9 +304,6 @@ function upPokeAdd() {
             '</div>'
     });
 
-
-
-
 }
 
 
@@ -311,7 +311,7 @@ function deleteToTeam(poke) {
 
     let realocandoGetTeamStorage = getTeamStorage()
     realocandoGetTeamStorage = realocandoGetTeamStorage.filter(function (element, index) {
-        console.log(element, index)
+       
         return poke != index
     })
 
@@ -319,7 +319,7 @@ function deleteToTeam(poke) {
     upPokeAdd()
     toggleBtnCriarTime()
     mostrarAdd()
-    getPag1(pokeApiLink)
+    loadPagePokemon(pokeApiLink)
 
 
 
@@ -356,7 +356,7 @@ mostra a visualização padrao assim  que carregar todos os pokemons*/
 
 getElementById(btnSalvarId).addEventListener('click', function (event) {
     event.preventDefault();
-   
+
 
 
     if (getElementById(nameTeamPokeId).value != "") {
@@ -373,22 +373,21 @@ getElementById(btnSalvarId).addEventListener('click', function (event) {
 
         }
 
-        console.log(dadosEquipe)
         const realocandoGetListTeamStorage = getListTeamStorage()
         const indexEditPokemon = localStorage.getItem(editarTimeKey)
-        if(indexEditPokemon){
+        if (indexEditPokemon) {
             realocandoGetListTeamStorage[indexEditPokemon] = dadosEquipe
             localStorage.removeItem(editarTimeKey)
-        }else {
+        } else {
             realocandoGetListTeamStorage.push(dadosEquipe)
         }
-       
+
         localStorage.setItem(listTeamKey, JSON.stringify(realocandoGetListTeamStorage))
         limparLocalStorage()
         getElementById(nameTeamPokeId).value = ""
 
         toggleBtnSalvar()
-        getPag1(pokeApiLink)
+        loadPagePokemon(pokeApiLink)
 
 
 
@@ -402,18 +401,17 @@ getElementById(btnSalvarId).addEventListener('click', function (event) {
 
 function excluirStorage() {
     const indexEditPokemon = localStorage.getItem(editarTimeKey)
-    if(indexEditPokemon){
-       const listaTime = getListTeamStorage().filter(function(element,index){
-        
-        return indexEditPokemon != index
-       })
-       localStorage.setItem(listTeamKey, JSON.stringify(listaTime))
-       localStorage.removeItem(editarTimeKey)
+    if (indexEditPokemon) {
+        const listaTime = getListTeamStorage().filter(function (element, index) {
+
+            return indexEditPokemon != index
+        })
+        localStorage.setItem(listTeamKey, JSON.stringify(listaTime))
+        localStorage.removeItem(editarTimeKey)
     }
 
     let realocandoGetTeamStorage = getTeamStorage()
     realocandoGetTeamStorage = realocandoGetTeamStorage.filter(function (element, index) {
-        console.log(element, index)
         return index == null
     })
     getElementById(nameTeamPokeId).value = ""
@@ -421,7 +419,7 @@ function excluirStorage() {
 
     //toggleBtnExcluir()
     upPokeAdd()
-    getPag1(pokeApiLink)
+    loadPagePokemon(pokeApiLink)
 
 }
 function toggleBtnCriarTime() {
@@ -499,6 +497,5 @@ function mostrarAdd() {
             element.style.display = "none"
         })
     }
-    console.log(btnCriarTimeDisplayNone)
 }
 
