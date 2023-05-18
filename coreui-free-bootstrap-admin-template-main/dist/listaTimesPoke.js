@@ -3,9 +3,21 @@ var listTeamKey = "listTeam"
 var listaTimeId = "lista-de-time"
 var btnExcluirListaId = "btn-excluir"
 var tempStorageKey = "pokeSelect"
+var pokeAddTeamId = "pokemonTeamx"
+var pokemonCardId = "pokemonCard"
+var editarTimeKey = "editarTime"
 
 function getElementById(id) {
     return document.getElementById(id)
+}
+function getEditarStorage(){
+    const storageEditar = localStorage.getItem(editarTimeKey)
+    return JSON.parse(storageEditar) || []
+}
+function getTeamStorage() {
+    const StorageTeamAdd = localStorage.getItem(listPokemonCardKey)
+    return JSON.parse(StorageTeamAdd) || []  /*maneira mais pratica de dizer que pode estar preenchida ou nulo (|| = a "ou" [] = a "null")
+    dessa forma nao precisei faz o if para validar que o localStorage estava null para  inserir os dados*/
 }
 
 function getListTeamStorage() {
@@ -17,6 +29,8 @@ preencherListaTime()
 function preencherListaTime() {
     getElementById(listaTimeId).innerHTML = ""
     getListTeamStorage().forEach(function (element, index) {
+
+
         if (element.pokeOne == undefined) {
             element.pokeOne = {
                 PokemonImage: "",
@@ -64,11 +78,11 @@ function preencherListaTime() {
         getElementById(listaTimeId).innerHTML += '<tr>' +
             '<th scope="row">' + (index + 1) + '</th>' +
             '<td><h6>' + element.nameTeam + '<h6></td>' +
-            '<td>' + 
+            '<td>' +
             '<div><img class ="imgOne" style="width: 3rem; height:3rem; display: none;" src="' + element.pokeOne.PokemonImage + '"  alt="' + element.pokeOne.NamePokemon + '"></div>' +
             '<h6>' + element.pokeOne.NamePokemon + '</h6>' +
             "<div class='more-info-pokeOne' style='display: none;'><a href='base/move-list-lista-time.html' class='list-group-item list-group-item-action' ><button onclick= 'moreInfoPokeSelect(\"" + element.pokeOne.NamePokemon + "\",\"" + element.pokeOne.PokemonImage + "\")' class='btn btn-primary btn-sm more-info'> More Info</button></a></div>" +
-            '</td>'+
+            '</td>' +
             '<td>' +
             '<div><img class ="imgTwo" style="width: 3rem; height:3rem; display: none;" src="' + element.pokeTwo.PokemonImage + '"  alt="' + element.pokeTwo.NamePokemon + '"></div>' +
             '<h6>' + element.pokeTwo.NamePokemon + '</h6>' +
@@ -94,9 +108,9 @@ function preencherListaTime() {
             '<h6>' + element.pokeSix.NamePokemon + '</h6>' +
             "<div class='more-info-pokeSix' style='display: none;'><a href='base/move-list-lista-time.html'  class='list-group-item list-group-item-action'><button onclick= 'moreInfoPokeSelect(\"" + element.pokeSix.NamePokemon + "\",\"" + element.pokeSix.PokemonImage + "\")' class='btn btn-primary btn-sm more-info'> More Info</button></a></div>" +
             '</td>' +
-            '<td><button class="btn btn-ghost-warning">Editar</button><button onclick="onClickBtnExcluir(' + index + ')" id="btn-excluir" class="btn btn-ghost-danger">Excluir</button></td>' +
+            "<td><button class='btn btn-ghost-warning' onclick='onClickEditarTime(" + index + ")''>Editar</button><button onclick='onClickBtnExcluir(" + index + ")' id='btn-excluir' class='btn btn-ghost-danger'>Excluir</button></td>" +
             '</tr>'
-
+        console.log(element)
         if (element.pokeOne.PokemonImage) {
             document.querySelectorAll(".imgOne")[index].style.display = "flex"
             document.querySelectorAll(".more-info-pokeOne")[index].style.display = "inline-block"
@@ -104,17 +118,17 @@ function preencherListaTime() {
         if (element.pokeTwo.PokemonImage) {
             document.querySelectorAll(".imgTwo")[index].style.display = "flex"
             document.querySelectorAll(".more-info-pokeTwo")[index].style.display = "inline-block"
-        
+
         }
         if (element.pokeThree.PokemonImage) {
             document.querySelectorAll(".imgThree")[index].style.display = "flex"
             document.querySelectorAll(".more-info-pokeThree")[index].style.display = "inline-block"
         }
-        
+
         if (element.pokeFour.PokemonImage) {
             document.querySelectorAll(".imgFour")[index].style.display = "flex"
             document.querySelectorAll(".more-info-pokeFour")[index].style.display = "inline-block"
-            
+
         }
         if (element.pokeFive.PokemonImage) {
             document.querySelectorAll(".imgFive")[index].style.display = "flex"
@@ -149,4 +163,9 @@ function moreInfoPokeSelect(namePokeSelect, imgLinkSelect) {
     }
     localStorage.setItem(tempStorageKey, JSON.stringify(moreInfoSelect))
     console.log(moreInfoSelect)
+}
+
+function onClickEditarTime(index) {
+    localStorage.setItem(editarTimeKey, index)
+    window.location.href = "file:///home/marcos/Desktop/ESTUDOS/fetch-axios/coreui-free-bootstrap-admin-template-main/dist/colors.html"
 }

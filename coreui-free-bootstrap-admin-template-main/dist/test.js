@@ -16,20 +16,36 @@ var tempStorageKey = "pokeSelect"
 var nameTeamPokeId = "nome-time"
 var listTeamKey = "listTeam"
 var btnSalvarId = "botao-salvar"
-
+var editarTimeKey = "editarTime"
 var btnExcluirId = "botao-excluir"
 var btnCriarTimeId = "botao-criar-time"
-limparLocalStorage()
-function limparLocalStorage(){
-let realocandoGetTeamStorage = getTeamStorage()
-    realocandoGetTeamStorage = realocandoGetTeamStorage.filter(function (element, index) {
-        console.log(element, index)
-        return index == null
-    })
-
-    localStorage.setItem(listPokemonCardKey, JSON.stringify(realocandoGetTeamStorage))
+var lastLink 
+initPage()
+async function initPage(){
+    limparLocalStorage()
+    await getPag1(pokeApiLink)
+    loadEditPokemon()
+    //mostrarAdd()
+    
 }
 
+
+function limparLocalStorage() {
+    let realocandoGetTeamStorage = getTeamStorage()
+    if(realocandoGetTeamStorage){
+        realocandoGetTeamStorage = realocandoGetTeamStorage.filter(function (element, index) {
+            console.log(element, index)
+            return index == null
+        })
+    
+        localStorage.setItem(listPokemonCardKey, JSON.stringify(realocandoGetTeamStorage))
+    }
+    
+}
+function getEditarStorage() {
+    const storageEditar = localStorage.getItem(editarTimeKey)
+    return JSON.parse(storageEditar) || []
+}
 function getTeamStorage() {
     const StorageTeamAdd = localStorage.getItem(listPokemonCardKey)
     return JSON.parse(StorageTeamAdd) || []  /*maneira mais pratica de dizer que pode estar preenchida ou nulo (|| = a "ou" [] = a "null")
@@ -132,6 +148,7 @@ async function getSprites(para) {
 }
 
 async function getPag1(pokeApiLinkParam) {
+    lastLink = pokeApiLinkParam
 
     toggleSpinner()
     mostrarAdd()
@@ -180,7 +197,7 @@ async function getPag1(pokeApiLinkParam) {
     }
     toggleSpinner()
     mostrarAdd()
-    
+
 
     //getElementById(pokemonId).innerHTML +="<button onclick='previousPagesssss(\""+response.data.previous+"\")'>Previous</button>"
     nextLink = response.data.next
@@ -218,7 +235,7 @@ function addPokemon(namePoke, imgLink) {
         toggleBtnCriarTime()
 
         mostrarAdd()
-        getPag1(pokeApiLink)
+        getPag1(lastLink)
 
 
     }/* um if para estabelecer que que o comprimento pode ir somente até 6 lugares (length é o total e conta a partir do 1)
@@ -229,7 +246,38 @@ function addPokemon(namePoke, imgLink) {
 empregando valores a elas */
 
 
-getPag1(pokeApiLink)
+function loadEditPokemon(){
+    const index = localStorage.getItem(editarTimeKey)
+    if (index){
+       const time = getListTeamStorage()[index]
+       const timeArray = []
+       if(time.pokeOne){
+        timeArray.push(time.pokeOne)
+       }
+       if(time.pokeTwo){
+        timeArray.push(time.pokeTwo)
+       }
+       if(time.pokeThree){
+        timeArray.push(time.pokeThree)
+       }
+       if(time.pokeFour){
+        timeArray.push(time.pokeFour)
+       }
+       if(time.pokeFive){
+        timeArray.push(time.pokeFive)
+       }
+       if(time.pokeSix){
+        timeArray.push(time.pokeSix)
+       }
+       localStorage.setItem(listPokemonCardKey, JSON.stringify(timeArray))
+       getElementById(nameTeamPokeId).value = time.nameTeam
+       upPokeAdd()
+       
+      
+    }
+}
+
+
 
 
 function upPokeAdd() {
@@ -252,9 +300,9 @@ function upPokeAdd() {
             "<button onclick= 'deleteToTeam(" + index + ")' class='btn btn-danger' >Delete To Team</button>" +
             '</div>'
     });
-    
-  
-    
+
+
+
 
 }
 
@@ -309,7 +357,7 @@ mostra a visualização padrao assim  que carregar todos os pokemons*/
 getElementById(btnSalvarId).addEventListener('click', function (event) {
     event.preventDefault();
    
-    
+
 
     if (getElementById(nameTeamPokeId).value != "") {
 
@@ -327,11 +375,18 @@ getElementById(btnSalvarId).addEventListener('click', function (event) {
 
         console.log(dadosEquipe)
         const realocandoGetListTeamStorage = getListTeamStorage()
-        realocandoGetListTeamStorage.push(dadosEquipe)
+        const indexEditPokemon = localStorage.getItem(editarTimeKey)
+        if(indexEditPokemon){
+            realocandoGetListTeamStorage[indexEditPokemon] = dadosEquipe
+            localStorage.removeItem(editarTimeKey)
+        }else {
+            realocandoGetListTeamStorage.push(dadosEquipe)
+        }
+       
         localStorage.setItem(listTeamKey, JSON.stringify(realocandoGetListTeamStorage))
         limparLocalStorage()
         getElementById(nameTeamPokeId).value = ""
-       
+
         toggleBtnSalvar()
         getPag1(pokeApiLink)
 
@@ -340,12 +395,21 @@ getElementById(btnSalvarId).addEventListener('click', function (event) {
     } else {
         alert("Preencher Nome do Time")
     }
-    
+
 
 })
 
 
 function excluirStorage() {
+    const indexEditPokemon = localStorage.getItem(editarTimeKey)
+    if(indexEditPokemon){
+       const listaTime = getListTeamStorage().filter(function(element,index){
+        
+        return indexEditPokemon != index
+       })
+       localStorage.setItem(listTeamKey, JSON.stringify(listaTime))
+       localStorage.removeItem(editarTimeKey)
+    }
 
     let realocandoGetTeamStorage = getTeamStorage()
     realocandoGetTeamStorage = realocandoGetTeamStorage.filter(function (element, index) {
@@ -358,7 +422,7 @@ function excluirStorage() {
     //toggleBtnExcluir()
     upPokeAdd()
     getPag1(pokeApiLink)
-    
+
 }
 function toggleBtnCriarTime() {
     var isBtnCriarTimeDisplayBlock =
@@ -369,7 +433,7 @@ function toggleBtnCriarTime() {
         getElementById(btnSalvarId).style.display = "inline-block"
         getElementById(pokeAddTeamId).style.display = "flex"
         getElementById(nameTeamId).style.display = "block"
-        
+
 
     } else {
         getElementById(btnCriarTimeId).style.display = "inline-block"
@@ -407,7 +471,7 @@ function toggleBtnExcluir() {
     var isBtnSalvarDisplayBlock =
         getElementById(btnExcluirId).style.display == "inline-block"
     if (isBtnSalvarDisplayBlock) {
-        
+
         getElementById(btnExcluirId).style.display = "inline-block"
         getElementById(btnSalvarId).style.display = "inline-block"
         getElementById(pokeAddTeamId).style.display = "flex"
@@ -416,24 +480,25 @@ function toggleBtnExcluir() {
 
     } else {
 
-       
+
         getElementById(btnExcluirId).style.display = "none"
         getElementById(btnSalvarId).style.display = "none"
         getElementById(pokeAddTeamId).style.display = "none"
         getElementById(nameTeamId).style.display = "none"
     }
 }
-mostrarAdd()
-function mostrarAdd(){
+
+function mostrarAdd() {
     var btnCriarTimeDisplayNone = getElementById(btnCriarTimeId).style.display == "none"
-    if(btnCriarTimeDisplayNone) {
+    if (btnCriarTimeDisplayNone) {
         document.querySelectorAll(".botao-add").forEach(element => {
             element.style.display = "inline-block"
         })
-    } else{
+    } else {
         document.querySelectorAll(".botao-add").forEach(element => {
             element.style.display = "none"
         })
     }
     console.log(btnCriarTimeDisplayNone)
 }
+
